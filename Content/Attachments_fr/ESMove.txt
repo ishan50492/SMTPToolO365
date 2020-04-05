@@ -1,0 +1,31 @@
+'localhost:9200/_cluster/reroute' -d '{
+    "commands" : [ {
+        "move" :
+            {
+              "index" : "group7to11poc", "shard" : 3,
+              "from_node" : "SPOCNODE5", "to_node" : "SPOCNODE1"
+            }
+        },
+        {
+        "move" :
+            {
+              "index" : "group7to11poc", "shard" : 2,
+              "from_node" : "SPOCNODE5", "to_node" : "SPOCNODE2"
+            }
+        },
+        {
+        "move" :
+            {
+              "index" : "group7to11poc", "shard" : 7,
+              "from_node" : "SPOCNODE5", "to_node" : "SPOCNODE3"
+            }
+        },
+        {
+        "move" :
+            {
+              "index" : "group7to11poc", "shard" : 4,
+              "from_node" : "SPOCNODE5", "to_node" : "SPOCNODE4"
+            }
+        }
+    ]
+}'

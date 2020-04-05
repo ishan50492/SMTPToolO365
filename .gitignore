@@ -1,0 +1,12 @@
+# Ignoring all the SMTP email addresses file
+Content/SMTP*.txt
+
+# Ignoring failedemails.json
+/failedemails*.json
+
+# Ignoring Logs
+Logs/
+
+# Ignoring Metadata files
+.idea/workspace.xml
+*.pyc

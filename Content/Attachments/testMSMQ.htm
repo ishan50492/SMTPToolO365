@@ -1,0 +1,33 @@
+ private void TestMSMQ2()
+        {
+            ResetL1Command rstL1command = new ResetL1Command(4567, 12345, Guid.NewGuid().ToString("N"));
+            FailActionQueue failActionQueue = new FailActionQueue();
+            failActionQueue.Add(rstL1command);
+
+            UnlockL1Command unlockL1Command = new UnlockL1Command(new List<int>{4567,6666}, 12345, Guid.NewGuid().ToString("N"));
+            failActionQueue.Add(unlockL1Command);
+
+            FailActionQueueProcessor failActionQueueProcessor = new FailActionQueueProcessor();
+            failActionQueueProcessor.Run();
+
+        }
+
+        private void TestMSMQ()
+        {
+            FailActionMSMQ msmq = new FailActionMSMQ(ConfigHost.MergeFailQueue,MSMQType.ReadWrite,new BinaryMessageFormatter());
+            ResetL1Command rstL1command = new ResetL1Command(4567, 12345, Guid.NewGuid().ToString("N"));
+
+            CommandDescriptor cmdDescriptor = new CommandDescriptor();
+            cmdDescriptor.CommandType = CommandType.ResetL1Command;
+            MemoryStream  stream = new MemoryStream();
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            binaryFormatter.Serialize(stream,rstL1command);
+            stream.Flush();
+            cmdDescriptor.Command = stream.ToArray();
+            msmq.AddItem(cmdDescriptor);
+
+            CommandDescriptor cmdreceive = msmq.GetItem(1);
+            Console.WriteLine(((ResetL1Command)binaryFormatter.Deserialize(new MemoryStream(cmdreceive.Command))).GUID);
+            Console.Read();
+
+        }

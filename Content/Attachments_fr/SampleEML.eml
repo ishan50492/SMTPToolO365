@@ -1,0 +1,364 @@
+Received: from ELSMAQA10ENV1.test10.local (192.168.11.24) by
+ ELSMAQA07ENV1.test07.local (192.168.11.26) with Microsoft SMTP Server id
+ 8.3.245.1; Fri, 2 Nov 2012 01:07:26 -0700
+Received: from ELSMAQA10ENV1.test10.local ([fe80::4d2f:4c16:2d19:891a]) by
+ ELSMAQA10ENV1.test10.local ([fe80::4d2f:4c16:2d19:891a%13]) with mapi id
+ 14.02.0298.004; Fri, 2 Nov 2012 05:06:28 -0300
+From: QA1 <QA1@QATEST10.COM>
+To: "qa1@qatest07.com" <qa1@qatest07.com>
+Subject: Test 1
+Thread-Topic: Test 1
+Thread-Index: Ac240PXiiN7dK/vURWWFYlqYRsdxGg==
+Date: Fri, 2 Nov 2012 08:06:28 +0000
+Message-ID: <1546E89258FB364E86A74F1E388B83AF1D79368E@ELSMAQA10ENV1.test10.local>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [172.21.74.8]
+Content-Type: multipart/alternative;
+	boundary="_681fffa3-3092-4a7b-82c5-fc10735defc1_"
+MIME-Version: 1.0
+Return-Path: QA1@QATEST10.COM
+X-MS-Exchange-Organization-OriginalArrivalTime: 02 Nov 2012 08:07:26.6875
+ (UTC)
+X-MS-Exchange-Organization-AuthSource: ELSMAQA07ENV1.test07.local
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-Exchange-Organization-OriginalSize: 20510
+X-MS-Exchange-Organization-Recipient-Limit-Verified: True
+
+--_681fffa3-3092-4a7b-82c5-fc10735defc1_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Authentication Methods
+
+By default, the authentication method for accessing OWA is basic and/or Int=
+egrated Windows authentication, but actually there are five different authe=
+ntication methods that can be used to validate your OWA users:
+
+  *
+Anonymous access: Enabling anonymous connections allows HTTP clients to acc=
+ess resources without specifying a Microsoft Windows 200x user account. Pas=
+swords for anonymous accounts are not verified; the password is only logged=
+ in the Windows 200x Event Log. By default, anonymous access is not enabled=
+. The server creates and uses the account IUSR_computername.
+  *
+Integrated Windows authentication: The Integrated Windows authentication me=
+thod is enabled by default (except on front-end servers). This authenticati=
+on method also requires HTTP users to have a valid Windows 200x user accoun=
+t and password to access information. Users are not prompted for their acco=
+unt names and passwords; instead, the server negotiates with the Windows 20=
+00 security packages installed on the client computer. This method allows t=
+he server to authenticate users without prompting them for information and =
+without transmitting unencrypted information across the network.
+  *
+Digest authentication: Digest authentication works only with Active Directo=
+ry accounts. It=92s quite secure because it sends a hash value over the net=
+work rather than a plaintext password, as is the case with basic authentica=
+tion. Digest authentication works across proxy servers and other firewalls =
+and is available on Web Distributed Authoring and Versioning (WebDAV) direc=
+tories. To use this form of authentication, your clients must use Internet =
+Explorer 5.0 or later.
+  *
+Basic authentication: Basic authentication transmits user passwords across =
+the network as unencrypted information. Although this method allows users t=
+o access all Exchange resources, it is not very secure. To enhance security=
+, it is strongly advised that you use SSL with basic authentication to encr=
+ypt all information. We will show you how to enable Secure Socket Layer (SS=
+L) on your OWA virtual directories in the next section.
+  *
+.NET Passport authentication: .NET Passport authentication allows your site=
+=92s users to create a single sign-in name and password for easy, secure ac=
+cess to all .NET Passport-enabled Web sites and services. .NET Passport-ena=
+bled sites rely on the .NET Passport central server to authenticate users r=
+ather than hosting and maintaining their own proprietary authentication sys=
+tems. However, the .NET Passport central server does not authorize or deny =
+a specific user=92s access to individual .NET Passport-enabled sites. It is=
+ Web site=92s responsibility to control user permissions. Using .NET Passpo=
+rt authentication requires that a default domain be defined. You probably k=
+now the .NET Passport authentication method from services such as Microsoft=
+=92s MSN Hotmail and Messenger. Note that this authentication method can be=
+ set only through the IIS Manager, not the Exchange System Manager.
+
+OWA 2003 Security Flaw
+
+In November 2003, the NTBugTraq mailing list found a security flaw in OWA 2=
+003. Users who use OWA for Exchange Server 2003 to access their mailboxes c=
+ould connect to another user=92s mailbox. An attacker seeking to exploit th=
+is vulnerability could not predict which mailbox they would connect to or i=
+f they would connect to another user=92s mailbox at all. The vulnerability =
+causes random and unreliable access to mailboxes and is specifically limite=
+d to mailboxes that have recently been accessed through OWA. This behavior =
+occurs when OWA is used in an Exchange front-end server configuration and w=
+hen Kerberos (the preferred Windows authentication protocol, used whenever =
+possible, and the default protocol used by Exchange Server 2003 between fro=
+nt-end and back-end Exchange servers for OWA) is disabled as an authenticat=
+ion method for the IIS Web site that hosts OWA on the back-end Exchange ser=
+vers. By default, Kerberos authentication is used as the HTTP authenticatio=
+n method between Exchange Server 2003 front-end and back-end servers.
+
+This vulnerability is exposed only if the Web site that is running the Exch=
+ange Server 2003 programs on the Exchange back-end server has been configur=
+ed not to use Kerberos authentication and OWA is using NTLM authentication.=
+ This configuration change can occur when Microsoft Windows SharePoint Serv=
+ices are installed on a Windows Server 2003 server that also functions as a=
+n Exchange Server 2003 back end.
+
+Read more about this security issue in Microsoft Security Bulletin MS04-002=
+ at: www.microsoft.com/technet/security/bulletin/MS04-002.mspx<http://www.m=
+icrosoft.com/technet/security/bulletin/MS04-002.mspx>.
+
+Enabling SSL on OWA
+
+If you have OWA clients accessing the organization=92s Exchange 2003 server=
+ from an external network, you normally use the basic authentication method=
+, but by default this method transmits all traffic (including usernames and=
+ passwords!) between the server and the client in cleartext. Therefore, it=
+=92s highly recommended that you encrypt the traffic using SSL. In this sec=
+tion, we show you step by step how to create and implement your own SSL cer=
+tificate using your own certificate authority (CA). Instead of creating you=
+r own SSL certificate, you could buy a third-party certificate from a provi=
+der such as VeriSign, Thawte, or InstantSSL. If you choose the latter optio=
+n, the third-party certificate provider typically has the necessary instruc=
+tions for you install its specific certificate.
+
+By the Book=85
+By implementing SSL on your OWA virtual directories, you encrypt the commun=
+ication between the client browser and the OWA server itself. This means th=
+at your OWA users can safely access their mailboxes without you having to w=
+orry that either passwords or confidential information in e-mail messages w=
+ill be intercepted and used by third parties for malicious purposes. If you=
+ use the basic authentication method and don=92t implement SSL, all data tr=
+ansmitted between the client browser and the OWA server will be sent in cle=
+artext and unencrypted, meaning that anyone with a sniffer program could re=
+trieve all information transmitted. As you might guess, this would be quite=
+ a security hole. Another benefit of enabling SSL is your users=92 option t=
+o change their passwords through the OWA interface.
+
+The first thing to do is to decide what server should hold the CA role. Thi=
+s could be any server, but it=92s recommended that you use at least a membe=
+r server of your Active Directory domain/forest. Many Exchange admins in sm=
+all to midsize organizations choose to install it on one of the Exchange se=
+rvers, which is absolutely fine, especially if you use the Certificate Auth=
+ority Web Enrollment component, which requires IIS to be installed on the s=
+erver.
+
+The first thing to do is to decide what server should hold the CA role. Thi=
+s could be any server, but it=92s recommended that you use at least a membe=
+r server of your Active Directory domain/forest. Many Exchange admins in sm=
+all to midsize organizations choose to install it on one of the Exchange se=
+rvers, which is absolutely fine, especially if you use the Certificate Auth=
+ority Web Enrollment component, which requires IIS to be installed on the s=
+erver.
+
+The first thing to do is to decide what server should hold the CA role. Thi=
+s could be any server, but it=92s recommended that you use at least a membe=
+r server of your Active Directory domain/forest. Many Exchange admins in sm=
+all to midsize organizations choose to install it on one of the Exchange se=
+rvers, which is absolutely fine, especially if you use the Certificate Auth=
+ority Web Enrollment component, which requires IIS to be installed on the s=
+erver.
+
+The first thing to do is to decide what server should hold the CA role. Thi=
+s could be any server, but it=92s recommended that you use at least a membe=
+r server of your Active Directory domain/forest. Many Exchange admins in sm=
+all to midsize organizations choose to install it on one of the Exchange se=
+rvers, which is absolutely fine, especially if you use the Certificate Auth=
+ority Web Enrollment component, which requires IIS to be installed on the s=
+erver.
+
+The first thing to do is to decide what server should hold the CA role. Thi=
+s could be any server, but it=92s recommended that you use at least a membe=
+r server of your Active Directory domain/forest. Many Exchange admins in sm=
+all to midsize organizations choose to install it on one of the Exchange se=
+rvers, which is absolutely fine, especially if you use the Certificate Auth=
+ority Web Enrollment component, which requires IIS to be installed on the s=
+erver.
+
+--_681fffa3-3092-4a7b-82c5-fc10735defc1_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html dir=3D"ltr">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<meta name=3D"GENERATOR" content=3D"MSHTML 9.00.8112.16443">
+<style id=3D"owaParaStyle">P {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+</style>
+</head>
+<body fPStyle=3D"1" ocsi=3D"0">
+<div style=3D"FONT-FAMILY: Tahoma; DIRECTION: ltr; COLOR: #000000; FONT-SIZ=
+E: 10pt">
+<h2 style=3D"FONT-FAMILY: Tahoma; DIRECTION: ltr; COLOR: #000000; FONT-SIZE=
+: 10pt" class=3D"H2">
+Authentication Methods</h2>
+<p style=3D"FONT-FAMILY: Tahoma; DIRECTION: ltr; COLOR: #000000; FONT-SIZE:=
+ 10pt" class=3D"BdyTxt1">
+By default, the authentication method for accessing OWA is basic and/or Int=
+egrated Windows authentication, but actually there are five different authe=
+ntication methods that can be used to validate your OWA users:
+</p>
+<div style=3D"FONT-FAMILY: Tahoma; DIRECTION: ltr; COLOR: #000000; FONT-SIZ=
+E: 10pt">
+<ul>
+<li>
+<div class=3D"BulLstA"><b>Anonymous access: </b>Enabling anonymous connecti=
+ons allows HTTP clients to access resources without specifying a Microsoft =
+Windows 200x user account. Passwords for anonymous accounts are not verifie=
+d; the password is only logged in
+ the Windows 200x Event Log. By default, anonymous access is not enabled. T=
+he server creates and uses the account IUSR_computername.</div>
+</li><li>
+<div class=3D"BulLst"><b>Integrated Windows</b> <b>authentication:</b> The =
+Integrated Windows authentication method is enabled by default (except on f=
+ront-end servers). This authentication method also requires HTTP users to h=
+ave a valid Windows 200x user account
+ and password to access information. Users are not prompted for their accou=
+nt names and passwords; instead, the server negotiates with the Windows 200=
+0 security packages installed on the client computer. This method allows th=
+e server to authenticate users without
+ prompting them for information and without transmitting unencrypted inform=
+ation across the network.</div>
+</li><li>
+<div class=3D"BulLst"><b>Digest authentication:</b> Digest authentication w=
+orks only with Active Directory accounts. It=92s quite secure because it se=
+nds a hash value over the network rather than a plaintext password, as is t=
+he case with basic authentication. Digest
+ authentication works across proxy servers and other firewalls and is avail=
+able on Web Distributed Authoring and Versioning (WebDAV) directories. To u=
+se this form of authentication, your clients must use Internet Explorer 5.0=
+ or later.</div>
+</li><li>
+<div class=3D"BulLst"><b>Basic authentication:</b> Basic authentication tra=
+nsmits user passwords across the network as unencrypted information. Althou=
+gh this method allows users to access all Exchange resources, it is not ver=
+y secure. To enhance security, it
+ is strongly advised that you use SSL with basic authentication to encrypt =
+all information. We will show you how to enable Secure Socket Layer (SSL) o=
+n your OWA virtual directories in the next section.</div>
+</li><li>
+<div class=3D"BulLstZ"><b>.NET Passport authentication:</b> .NET Passport a=
+uthentication allows your site=92s users to create a single sign-in name an=
+d password for easy, secure access to all .NET Passport-enabled Web sites a=
+nd services. .NET Passport-enabled sites
+ rely on the .NET Passport central server to authenticate users rather than=
+ hosting and maintaining their own proprietary authentication systems. Howe=
+ver, the .NET Passport central server does not authorize or deny a specific=
+ user=92s access to individual .NET
+ Passport-enabled sites. It is Web site=92s responsibility to control user =
+permissions. Using .NET Passport authentication requires that a default dom=
+ain be defined. You probably know the .NET Passport authentication method f=
+rom services such as Microsoft=92s MSN
+ Hotmail and Messenger. Note that this authentication method can be set onl=
+y through the IIS Manager, not the Exchange System Manager.</div>
+</li></ul>
+</div>
+<p dir=3D"ltr"><strong>OWA 2003 Security Flaw</strong></p>
+<p>In November 2003, the NTBugTraq mailing list found a security flaw in OW=
+A 2003. Users who use OWA for Exchange Server 2003 to access their mailboxe=
+s could connect to another user=92s mailbox. An attacker seeking to exploit=
+ this vulnerability could not predict
+ which mailbox they would connect to or if they would connect to another us=
+er=92s mailbox at all. The vulnerability causes random and unreliable acces=
+s to mailboxes and is specifically limited to mailboxes that have recently =
+been accessed through OWA. This behavior
+ occurs when OWA is used in an Exchange front-end server configuration and =
+when Kerberos (the preferred Windows authentication protocol, used whenever=
+ possible, and the default protocol used by Exchange Server 2003 between fr=
+ont-end and back-end Exchange servers
+ for OWA) is disabled as an authentication method for the IIS Web site that=
+ hosts OWA on the back-end Exchange servers. By default, Kerberos authentic=
+ation is used as the HTTP authentication method between Exchange Server 200=
+3 front-end and back-end servers.</p>
+<p>This vulnerability is exposed only if the Web site that is running the E=
+xchange Server 2003 programs on the Exchange back-end server has been confi=
+gured not to use Kerberos authentication and OWA is using NTLM authenticati=
+on. This configuration change can
+ occur when Microsoft Windows SharePoint Services are installed on a Window=
+s Server 2003 server that also functions as an Exchange Server 2003 back en=
+d.</p>
+<p>Read more about this security issue in Microsoft Security Bulletin MS04-=
+002 at:
+<a href=3D"http://www.microsoft.com/technet/security/bulletin/MS04-002.mspx=
+" target=3D"_blank">
+www.microsoft.com/technet/security/bulletin/MS04-002.mspx</a>. </p>
+<h2 class=3D"H1">Enabling SSL on OWA</h2>
+<p class=3D"BdyTxt1">If you have OWA clients accessing the organization=92s=
+ Exchange 2003 server from an external network, you normally use the basic =
+authentication method, but by default this method transmits all traffic (in=
+cluding usernames and passwords!) between
+ the server and the client in cleartext. Therefore, it=92s highly recommend=
+ed that you encrypt the traffic using SSL. In this section, we show you ste=
+p by step how to create and implement your own SSL certificate using your o=
+wn certificate authority (CA). Instead
+ of creating your own SSL certificate, you could buy a third-party certific=
+ate from a provider such as VeriSign, Thawte, or InstantSSL. If you choose =
+the latter option, the third-party certificate provider typically has the n=
+ecessary instructions for you install
+ its specific certificate.</p>
+<blockquote dir=3D"ltr">
+<p><strong>By the Book=85</strong> <br>
+By implementing SSL on your OWA virtual directories, you encrypt the commun=
+ication between the client browser and the OWA server itself. This means th=
+at your OWA users can safely access their mailboxes without you having to w=
+orry that either passwords or confidential
+ information in e-mail messages will be intercepted and used by third parti=
+es for malicious purposes. If you use the basic authentication method and d=
+on=92t implement SSL, all data transmitted between the client browser and t=
+he OWA server will be sent in cleartext
+ and unencrypted, meaning that anyone with a sniffer program could retrieve=
+ all information transmitted. As you might guess, this would be quite a sec=
+urity hole. Another benefit of enabling SSL is your users=92 option to chan=
+ge their passwords through the OWA
+ interface.</p>
+</blockquote>
+<p class=3D"BdyTxt">The first thing to do is to decide what server should h=
+old the CA role. This could be any server, but it=92s recommended that you =
+use at least a member server of your Active Directory domain/forest. Many E=
+xchange admins in small to midsize organizations
+ choose to install it on one of the Exchange servers, which is absolutely f=
+ine, especially if you use the Certificate Authority Web Enrollment compone=
+nt, which requires IIS to be installed on the server.</p>
+<p class=3D"BdyTxt"></p>
+<p class=3D"BdyTxt">The first thing to do is to decide what server should h=
+old the CA role. This could be any server, but it=92s recommended that you =
+use at least a member server of your Active Directory domain/forest. Many E=
+xchange admins in small to midsize organizations
+ choose to install it on one of the Exchange servers, which is absolutely f=
+ine, especially if you use the Certificate Authority Web Enrollment compone=
+nt, which requires IIS to be installed on the server.</p>
+<p class=3D"BdyTxt"></p>
+<p class=3D"BdyTxt">The first thing to do is to decide what server should h=
+old the CA role. This could be any server, but it=92s recommended that you =
+use at least a member server of your Active Directory domain/forest. Many E=
+xchange admins in small to midsize organizations
+ choose to install it on one of the Exchange servers, which is absolutely f=
+ine, especially if you use the Certificate Authority Web Enrollment compone=
+nt, which requires IIS to be installed on the server.</p>
+<p class=3D"BdyTxt"></p>
+<p class=3D"BdyTxt">The first thing to do is to decide what server should h=
+old the CA role. This could be any server, but it=92s recommended that you =
+use at least a member server of your Active Directory domain/forest. Many E=
+xchange admins in small to midsize organizations
+ choose to install it on one of the Exchange servers, which is absolutely f=
+ine, especially if you use the Certificate Authority Web Enrollment compone=
+nt, which requires IIS to be installed on the server.</p>
+<p class=3D"BdyTxt"></p>
+<p class=3D"BdyTxt">The first thing to do is to decide what server should h=
+old the CA role. This could be any server, but it=92s recommended that you =
+use at least a member server of your Active Directory domain/forest. Many E=
+xchange admins in small to midsize organizations
+ choose to install it on one of the Exchange servers, which is absolutely f=
+ine, especially if you use the Certificate Authority Web Enrollment compone=
+nt, which requires IIS to be installed on the server.</p>
+<p class=3D"BdyTxt"></p>
+<p class=3D"BdyTxt"></p>
+</div>
+</body>
+</html>
+
+--_681fffa3-3092-4a7b-82c5-fc10735defc1_--

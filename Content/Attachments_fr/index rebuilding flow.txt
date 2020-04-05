@@ -1,0 +1,39 @@
+﻿Old Behaviour Index Rebuilder
+Activities  :
+
+1-Rename Indecies :
+	1- backup search indecies for that group , create a table SearchIndex_groupId_datetime
+	2- mark all indecies inactive and locked (anything !)
+	3- wait 30 seconds so search manager will unload them (per sahiti input)
+	4- rename L3 indeicies root group folder to old_groupId first 3 digit in DB and file system
+	5
+	- activate again the L3 indexes from the backup table
+
+2-Start Rebuilding
+	1- get LastMarkedIndexMailID from MailIdentity table in ArchiveDB as MaxMailID
+	2- get last mail id from searchindexig rebuilding as start mail id
+	3- build mail ranges in 1000 range start/end and add them as new record in SearchInexing Rebuilding DB
+	4- at that point reindexing/remerge will take off
+
+3- Replace Records
+ once all the records in step 4 meaning they are completely merged
+	1- get max mail id from searchindexRebuilding MailsToIndex for that group 
+	2- delete from searchindexing DB where end mail id <= max mail id , delete 1000 by 1000
+	3- now insert all the records of MailsToIndex in searchindexRebuilding to MailsToIndex in searchindexing
+
+4-Delete Old Indicies 
+	1- mark old L3 Indicies as inActive , anything with "Old_"
+	2- delete al the "Old_" records for that group from search.searchindex DB
+	3- delete the root group folder "Old_"
+
+New Flow
+1- Request Index Lock Queue Request and rebuild the group indexes snapshot
+	1- create a request lock available L3 indexes , insert the locked one on to waiting queue
+	2- keep waiting till all the indexes in your queue is locked for your apptype
+	3- now get the max mail id for that group where indexid is on the list of the indexes you own.
+	4- rebuild the ranges for this group in Rebuilding DB
+	5- wait till all the record merged step 4
+	6- swap MailsToIndex Records for this group .
+	7- deactivate L3 Indexes that islocked by AppType 5 indexrebuilding for that group
+	8- delete all L3 indexes files/folders that islocked by AppType 5 indexrebuilding for that group
+	8- delete all the records islocked by AppType 5 indexrebuilding for that group

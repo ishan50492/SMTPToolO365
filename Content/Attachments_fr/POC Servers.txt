@@ -1,0 +1,27 @@
+SPOC01 - 10.4.52.218
+
+Thanks,
+Sarkis
+
+-----Original Message-----
+From: Sarkis Chakarian 
+Sent: Monday, July 28, 2014 3:08 PM
+To: Eduardo Suarez; Red Kwon; Haitham Khedre; Abhinav Agrawal; Soniya Bopache; Rajiv Batta; Karthik Rajamony; Shyam Odedra; Medhavi Sharma; Paul Kraus; Harry Saryan
+Subject: RE: Search POC team - Weekly status meeting
+
+Hi Eduardo,
+
+Lab is ready. Here is the info:
+
+SPOCNODE1 - 10.4.52.219
+SPOCNODE2 - 10.4.52.220
+SPOCNODE3 - 10.4.52.221
+SPOCNODE4 - 10.4.52.222
+SPOCNODE5 - 10.4.52.223
+SPOCNODE6 - 10.4.52.224
+POC SQL is ready. Here is the info:
+
+SPOCSQL01 – 10.4.52.225
+
+
+#1SearchPoc#2
