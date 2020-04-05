@@ -663,7 +663,7 @@ def mail_connect(args):
     server = None
     if args.o365:
         print('Printing MailConnect %s', args.serveraddr)
-        server = smtplib.SMTP(args.serveraddr, 587)
+        server = smtplib.SMTP(args.serveraddr, args.serverport)
 
         server.ehlo()
         server.starttls()
@@ -716,7 +716,7 @@ def main():
     # Setting the defaults
     parser.set_defaults(usetls=False)
     parser.set_defaults(usessl=False)
-    parser.set_defaults(serverport=25)
+    parser.set_defaults(serverport=587)
     parser.set_defaults(SMTP_USER="")
     parser.set_defaults(SMTP_PASS="")
     parser.set_defaults(debuglevel=0)

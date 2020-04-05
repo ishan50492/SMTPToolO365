@@ -1,5 +1,14 @@
-# SMTPTool
+# SMTP Tool
 A command-line based smtp client utility for email generation and email ingestion using random generated data based on Markov chain generator for building realistic/user-like data sets.
+
+### Tool Features
+
+For O365 Mail Exchange server
+- This tool has been configured to send mails via Exchange, SMTP and O365 mail servers
+- There are two ways in which O365 Mail exchange server can be used
+
+Way 1
+-
 
 ### SMTPTool Structure
 ```
