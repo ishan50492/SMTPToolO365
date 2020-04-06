@@ -35,6 +35,8 @@ Senders will be read from UserAccounts.xlsx file and recipients will be read fro
 $python SMTPTool.py -v -o "smtp.office365.com" -q 10
 ```
 
+For Exchange and SMTP
+
 **Generate** and send one email to provided email address and exchange host:<br />
 Email addresses in case of Exchange server will be read from Exchangeemailaddresses.txt file
 ```sh
