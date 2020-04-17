@@ -210,6 +210,7 @@ def mail_random_emails(args):
 
 
 def mail_random_emails_o365(args):
+    print("Inside mail_random_emails")
     count = 0
     failed_count = 0
     server = None
@@ -258,7 +259,7 @@ def mail_random_emails_o365(args):
         logger.info("Sending " + str(i) + " th mail")
 
         random_email = None
-        random_email = email_gtr.get_email_o365(include_attachments=includeAttachments, args=args)
+        random_email = email_gtr.get_email_o365(include_attachments=includeAttachments)
 
         msg = MIMEMultipart()
 
