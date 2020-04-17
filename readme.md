@@ -74,7 +74,7 @@ $python SMTPTool.py -v -o "smtp.office365.com" -q 10
 **Generate** and send 10 emails to provided email address and o365 exchange (Same sender):<br />
 Senders will be read from UserAccounts.xlsx file and recipients will be read from Content/emailaddresses.txt
 ```sh
-$python SMTPTool.py -v -o "smtp.office365.com" -q 10
+$python SMTPTool.py -v --one -o "smtp.office365.com" -q 10
 ```
 
 For Exchange and SMTP
